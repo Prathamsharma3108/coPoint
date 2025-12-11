@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>UI2Code</title>
+    <meta name="description" content="UI2Code — upload a screenshot, preview generated UI, and download clean HTML/CSS instantly." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="src/styles.css" />
+  </head>
+  <body>
+    <header class="nav">
+      <div class="container nav__inner">
+        <div class="brand">
+          <span class="brand__logo">⌁</span>
+          <span class="brand__name">UI2Code</span>
+        </div>
+        <button class="nav__toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <nav class="nav__links">
+          <a href="#features">Features</a>
+          <a href="#approach">Approach</a>
+          <a href="#impact">Impact</a>
+          <a href="#demo" class="btn btn--sm">Try Demo</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="gradient"></div>
+        <div class="container hero__grid">
+          <div class="hero__content">
+            <h1 class="hero__title">Turn screenshots into clean, production‑ready UI code</h1>
+            <p class="hero__subtitle">Upload any UI screenshot and preview auto‑generated HTML/CSS instantly. Crafted for hackathon velocity, with premium dark design and delightful motion.</p>
+            <div class="hero__actions">
+              <a href="#demo" class="btn btn--primary">Upload Screenshot</a>
+              <a href="#features" class="btn btn--ghost">Explore Features</a>
+            </div>
+            <div class="hero__stats">
+              <div class="stat"><span class="stat__num"><span id="stat-speed">3×</span></span><span class="stat__label">faster prototyping</span></div>
+              <div class="stat"><span class="stat__num">0</span><span class="stat__label">complex setup</span></div>
+              <div class="stat"><span class="stat__num">100%</span><span class="stat__label">dark‑mode native</span></div>
+            </div>
+          </div>
+          <div class="hero__preview">
+            <div class="preview__card">
+              <div class="preview__bar">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              </div>
+              <div class="preview__body">
+                <div class="skeleton skeleton--lg"></div>
+                <div class="skeleton"></div>
+                <div class="skeleton"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo" id="demo">
+        <div class="container">
+          <div class="section__head">
+            <h2>Screenshot Upload & Analysis</h2>
+            <p>Drag a screenshot here. We’ll interpret components and generate a clean UI layout you can preview and download.</p>
+          </div>
+
+          <div class="upload">
+            <input id="file-input" type="file" accept="image/*" hidden />
+            <div id="dropzone" class="dropzone" role="button" aria-label="Upload screenshot">
+              <div class="dropzone__content">
+                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" class="icon">
+                  <path d="M12 16V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  <path d="M8 12l4-4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.5" opacity=".4"/>
+                </svg>
+                <div>
+                  <span class="dropzone__title">Drop image or click to upload</span>
+                  <span class="dropzone__hint">PNG, JPG — up to 10MB</span>
+                </div>
+              </div>
+            </div>
+            <div id="upload-preview" class="upload__preview" aria-live="polite"></div>
+          </div>
+
+          <div class="generator">
+            <div class="preview">
+              <div class="section__subhead">
+                <h3>Real‑Time Code Preview</h3>
+                <p>See the generated layout rendered immediately.</p>
+              </div>
+              <div id="render-target" class="render"></div>
+            </div>
+            <div class="code">
+              <div class="section__subhead">
+                <h3>Generated Code</h3>
+                <p>HTML and CSS reflect spacing and hierarchy.</p>
+              </div>
+              <div class="tabs">
+                <button class="tab active" data-tab="html">HTML</button>
+                <button class="tab" data-tab="css">CSS</button>
+              </div>
+              <div class="codepanes">
+                <div id="code-html" class="codepane active">
+                  <pre><code id="html-output"></code></pre>
+                  <div class="code__actions">
+                    <button class="btn btn--sm" id="copy-html">Copy</button>
+                    <button class="btn btn--sm" id="download-html">Download</button>
+                  </div>
+                </div>
+                <div id="code-css" class="codepane">
+                  <pre><code id="css-output"></code></pre>
+                  <div class="code__actions">
+                    <button class="btn btn--sm" id="copy-css">Copy</button>
+                    <button class="btn btn--sm" id="download-css">Download</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="features" id="features">
+        <div class="container">
+          <div class="section__head">
+            <h2>Key Features</h2>
+            <p>Upload, analyze, translate, and preview — all in one elegant flow.</p>
+          </div>
+          <div class="grid">
+            <article class="card reveal">
+              <h4>Screenshot Upload</h4>
+              <p>Drop any UI screenshot. We parse structure and components.</p>
+            </article>
+            <article class="card reveal">
+              <h4>Vision‑to‑Code</h4>
+              <p>Model‑friendly templates generate clean, structured HTML/CSS.</p>
+            </article>
+            <article class="card reveal">
+              <h4>Real‑Time Preview</h4>
+              <p>Verify layout instantly in a live render panel.</p>
+            </article>
+            <article class="card reveal">
+              <h4>Downloadable Output</h4>
+              <p>Copy or download the generated code and keep building.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="approach" id="approach">
+        <div class="container">
+          <div class="section__head">
+            <h2>Technical Approach</h2>
+            <p>Use a multimodal model (e.g., GPT‑4o) to analyze screenshots, identify UI elements and hierarchy, and map them into structured templates.</p>
+          </div>
+          <div class="grid grid--text">
+            <article class="card">
+              <h4>Extraction</h4>
+              <p>Prompt guided detection of layout groups, spacing, and component types.</p>
+            </article>
+            <article class="card">
+              <h4>Templates</h4>
+              <p>Convert components into readable HTML/CSS with sensible defaults.</p>
+            </article>
+            <article class="card">
+              <h4>Renderer</h4>
+              <p>Lightweight client preview ensures fast iteration and feedback.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="impact" id="impact">
+        <div class="container">
+          <div class="section__head">
+            <h2>Impact</h2>
+            <p>Reduce frontend toil and accelerate prototyping. Showcase practical multimodal AI in a short hackathon window.</p>
+          </div>
+          <div class="cta">
+            <a href="#demo" class="btn btn--primary">Generate UI Now</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer__inner">
+        <span>© 2025 UI2Code</span>
+        <div class="footer__links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">GitHub</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="src/app.js"></script>
+  </body>
+  </html>
