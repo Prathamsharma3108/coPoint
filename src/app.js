@@ -3,7 +3,12 @@ const dropzone = document.getElementById('dropzone');
 const previewWrap = document.getElementById('upload-preview');
 const renderTarget = document.getElementById('render-target');
 const htmlOut = document.getElementById('html-output');
-const cssOut = document.getElementById('css-output');
+const reactOut = document.getElementById('react-output');
+const cssOut = null;
+const genHtmlBtn = document.getElementById('generate-html');
+const genReactBtn = document.getElementById('generate-react');
+const copyReactBtn = document.getElementById('copy-react');
+const downloadReactBtn = document.getElementById('download-react');
 const navToggle = document.getElementById('nav-toggle');
 const navLinks = document.querySelector('.nav__links');
 
@@ -22,6 +27,8 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.2 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+const state = { imageUrl: '', imageName: '' };
 
 // Mobile nav toggle
 if (navToggle && navLinks) {
@@ -53,7 +60,9 @@ function handleFile(file) {
   img.src = url;
   previewWrap.innerHTML = '';
   previewWrap.appendChild(img);
+  state.imageUrl = url; state.imageName = file.name;
   generateStubLayout(url, file.name);
+  if (reactOut) reactOut.textContent = generateReactFromHtml(url, file.name);
 }
 
 // Simple stub generator: builds a clean card layout for the uploaded screenshot
@@ -66,15 +75,21 @@ function generateStubLayout(imageUrl, name = 'Uploaded Screenshot') {
   const htmlFinal = html.replace('Generated UI', 'UI2Code Preview');
   renderTarget.innerHTML = `<style>${css}</style>${htmlFinal}`;
   htmlOut.textContent = htmlFinal.trim();
-  cssOut.textContent = css.trim();
+  if (cssOut) cssOut.textContent = css.trim();
 }
+
+function generateReactFromHtml(imageUrl, name) {
+  return `import React from 'react';\n\nexport default function GeneratedUI(){\n  return (\n    <div className=\"page\">\n      <header className=\"page__header\">\n        <div className=\"logo\">⌁</div>\n        <h1 className=\"title\">UI2Code Preview</h1>\n      </header>\n      <main className=\"page__content\">\n        <section className=\"card\">\n          <img className=\"card__image\" src=\"${imageUrl}\" alt=\"${name}\" />\n          <div className=\"card__body\">\n            <h2 className=\"card__title\">Interpreted Layout</h2>\n            <p className=\"card__text\">Detected primary visual block rendered with consistent spacing and hierarchy. Edit freely.</p>\n            <button className=\"card__btn\">Action</button>\n          </div>\n        </section>\n      </main>\n    </div>\n  );\n}`;
+}
+
+if (genHtmlBtn) genHtmlBtn.addEventListener('click', () => { if (state.imageUrl) generateStubLayout(state.imageUrl, state.imageName); });
+if (genReactBtn) genReactBtn.addEventListener('click', () => { if (state.imageUrl && reactOut) reactOut.textContent = generateReactFromHtml(state.imageUrl, state.imageName); });
 
 // Copy & download
 document.getElementById('copy-html').addEventListener('click', () => copyText(htmlOut.textContent));
-document.getElementById('copy-css').addEventListener('click', () => copyText(cssOut.textContent));
-
 document.getElementById('download-html').addEventListener('click', () => downloadFile('generated.html', htmlOut.textContent));
-document.getElementById('download-css').addEventListener('click', () => downloadFile('styles.css', cssOut.textContent));
+if (copyReactBtn) copyReactBtn.addEventListener('click', () => copyText(reactOut.textContent));
+if (downloadReactBtn) downloadReactBtn.addEventListener('click', () => downloadFile('GeneratedUI.jsx', reactOut.textContent));
 
 function copyText(text) {
   if (!text) return;
