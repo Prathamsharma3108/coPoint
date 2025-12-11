@@ -23,11 +23,20 @@
           </svg>
         </button>
         <nav class="nav__links">
-          <a href="#features">Features</a>
+          <div class="dropdown">
+            <button class="dropdown__toggle">Features</button>
+            <div class="dropdown__menu">
+              <a href="#feature-upload">Screenshot Upload</a>
+              <a href="#feature-vision">Vision‑to‑Code</a>
+              <a href="#feature-preview">Real‑Time Preview</a>
+              <a href="#feature-download">Downloadable Output</a>
+            </div>
+          </div>
           <a href="#approach">Approach</a>
           <a href="#impact">Impact</a>
           <a href="#demo" class="btn btn--sm">Try Demo</a>
         </nav>
+        <div class="nav__overlay" id="nav-overlay"></div>
       </div>
     </header>
 
@@ -39,13 +48,13 @@
             <h1 class="hero__title">Turn screenshots into clean, production‑ready UI code</h1>
             <p class="hero__subtitle">Upload any UI screenshot and preview auto‑generated HTML/CSS instantly. Crafted for hackathon velocity, with premium dark design and delightful motion.</p>
             <div class="hero__actions">
-              <a href="#demo" class="btn btn--primary">Upload Screenshot</a>
+              <a href="#demo" class="btn btn--upload">Upload Screenshot</a>
               <a href="#features" class="btn btn--ghost">Explore Features</a>
             </div>
             <div class="hero__stats">
               <div class="stat"><span class="stat__num"><span id="stat-speed">3×</span></span><span class="stat__label">faster prototyping</span></div>
               <div class="stat"><span class="stat__num">0</span><span class="stat__label">complex setup</span></div>
-              <div class="stat"><span class="stat__num">100%</span><span class="stat__label">dark‑mode native</span></div>
+              
             </div>
           </div>
           <div class="hero__preview">
@@ -135,19 +144,19 @@
             <p>Upload, analyze, translate, and preview — all in one elegant flow.</p>
           </div>
           <div class="grid">
-            <article class="card reveal">
+            <article class="card reveal" id="feature-upload">
               <h4>Screenshot Upload</h4>
               <p>Drop any UI screenshot. We parse structure and components.</p>
             </article>
-            <article class="card reveal">
+            <article class="card reveal" id="feature-vision">
               <h4>Vision‑to‑Code</h4>
               <p>Model‑friendly templates generate clean, structured HTML/CSS.</p>
             </article>
-            <article class="card reveal">
+            <article class="card reveal" id="feature-preview">
               <h4>Real‑Time Preview</h4>
               <p>Verify layout instantly in a live render panel.</p>
             </article>
-            <article class="card reveal">
+            <article class="card reveal" id="feature-download">
               <h4>Downloadable Output</h4>
               <p>Copy or download the generated code and keep building.</p>
             </article>
@@ -197,7 +206,7 @@
         <div class="footer__links">
           <a href="#">Privacy</a>
           <a href="#">Terms</a>
-          <a href="#">GitHub</a>
+          <a href="https://github.com/Prathamsharma3108/coPoint.git" target="_blank" rel="noopener">GitHub</a>
         </div>
       </div>
     </footer>

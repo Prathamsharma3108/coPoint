@@ -11,6 +11,7 @@ const copyReactBtn = document.getElementById('copy-react');
 const downloadReactBtn = document.getElementById('download-react');
 const navToggle = document.getElementById('nav-toggle');
 const navLinks = document.querySelector('.nav__links');
+const navOverlay = document.getElementById('nav-overlay');
 
 const tabs = document.querySelectorAll('.tab');
 const panes = document.querySelectorAll('.codepane');
@@ -35,6 +36,32 @@ if (navToggle && navLinks) {
   navToggle.addEventListener('click', () => {
     const open = navLinks.classList.toggle('open');
     navToggle.setAttribute('aria-expanded', String(open));
+    if (navOverlay) navOverlay.classList.toggle('show', open);
+    setToggleIcon(open);
+  });
+}
+
+function setToggleIcon(open) {
+  if (!navToggle) return;
+  navToggle.innerHTML = open
+    ? '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>'
+    : '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
+}
+
+if (navOverlay) navOverlay.addEventListener('click', () => { navLinks.classList.remove('open'); navOverlay.classList.remove('show'); setToggleIcon(false); });
+navLinks?.addEventListener('click', (e) => { if (e.target.tagName === 'A') { navLinks.classList.remove('open'); navOverlay.classList.remove('show'); setToggleIcon(false); } });
+window.addEventListener('resize', () => { if (window.innerWidth > 960) { navLinks.classList.remove('open'); navOverlay?.classList.remove('show'); setToggleIcon(false); } });
+
+// Features dropdown toggle (works on desktop hover and mobile tap)
+const dropdown = document.querySelector('.dropdown');
+const dropdownToggle = document.querySelector('.dropdown__toggle');
+if (dropdown && dropdownToggle) {
+  dropdownToggle.addEventListener('click', (e) => {
+    e.preventDefault();
+    dropdown.classList.toggle('open');
+  });
+  document.addEventListener('click', (e) => {
+    if (!dropdown.contains(e.target)) dropdown.classList.remove('open');
   });
 }
 
